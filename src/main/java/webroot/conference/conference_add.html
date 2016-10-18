@@ -19,45 +19,51 @@
 		<!--提示框-->
 		<script type="text/javascript" src="/static/js/jquery.tips.js"></script>
 		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/acore/utils.js"></script>
 </head>
 
 <script type="text/javascript">
 	$(top.hangge());
-	$(document).ready(function(){		
-		if($("#menuId").val()!=""){
-			var parentId = "${menu.parentId}";
-			if(parentId==""){
-				$("#parentId").attr("disabled",true);
-			}else{
-				$("#parentId").val(parentId);
-			}
-		}
-		setMUR();
+	$(document).ready(function(){
+		
+		
 	}); 
 
-	function setMUR(){
-		if($("#parentId").val()=="0"){
-			$("#menuUrl").attr("readonly",true);
-			$("#menuUrl").val("");
-			$("#form-field-radio1").attr("disabled",false);
-			$("#form-field-radio2").attr("disabled",false);
-		}else{
-			$("#menuUrl").attr("readonly",false);
-			$("#form-field-radio1").attr("disabled",true);
-			$("#form-field-radio2").attr("disabled",true);
-			$("#form-field-radio1").attr("checked",false);
-			$("#form-field-radio2").attr("checked",false);
-		}
+	
+	
+	function sucessHandler(data){
+		console.log(data);
+		$("#zhongxin").hide();
+		$("#zhongxin2").show();
+		top.Dialog.close();
 	}
+	
+	function errorHandler(data){
+		console.log(data);
+		demoError(data);
+	}
+	
 
 	//保存
 	function save(){
 		
+		var conferenceName = $("#conference_name").val();
+		var param = {};
+		if(isEmpty(conferenceName)){
+			alert("会议名称不能为空");
+			return;
+		}
 		
+		var tenant = $("#conference_tenant").val();
 		
+		if(isEmpty(tenant)){
+			alert("会议名称不能为空");
+			return;
+		}
+		param["tenant"] = tenant;
+		param["name"] = conferenceName;
+		post("http://localhost:8080/api/v1/conference/",param,sucessHandler,errorHandler);
 		
-		$("#zhongxin").hide();
-		$("#zhongxin2").show();
 	}
 	
 	function setType(value){
@@ -71,15 +77,28 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Conference Name: </label>
 										<div class="col-sm-9">
-											<input type="text" id="conference_name" placeholder="name" class="col-xs-10 col-sm-5">
+											<input type="text" id="conference_name" placeholder="name" class="col-xs-10 col-sm-5" required="required">
 										</div>
 									</div>
 									<div class="space-4"></div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Tenant: </label>
+
+										<div class="col-sm-9">
+											<input type="text" id="conference_tenant" placeholder="tenant" class="col-xs-10 col-sm-5">
+											<span class="help-inline col-xs-12 col-sm-7">
+												<span class="middle">Inline help text</span>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Conference Type: </label>
 
 										<div class="col-sm-9">
-											<input type="password" id="form-field-2" placeholder="conference_type" class="col-xs-10 col-sm-5">
+											<input type="text" id="form-field-2" placeholder="service_type" class="col-xs-10 col-sm-5">
 											<span class="help-inline col-xs-12 col-sm-7">
 												<span class="middle">Inline help text</span>
 											</span>
@@ -166,7 +185,7 @@
 
 									<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="button">
+											<button class="btn btn-info" type="button" onclick="save()">
 												<i class="icon-ok bigger-110"></i>
 												Submit
 											</button>

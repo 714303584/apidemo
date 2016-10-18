@@ -9,14 +9,20 @@ function getBodyWight(percentum){
 }
 
 
-
+/**
+ * 
+ * @param postUrl Address requested by POST request 
+ * @param param  Parameters for Request Submission 
+ * @param successHandler  Successful handling function 
+ * @param errorHandler Error handling function 
+ */
 function post(postUrl,param,successHandler,errorHandler){
 	var token = sessionStorage.getItem("token"); 	
 	$.ajax({
 		type: "POST",
 		contentType: "application/json", 
 		url: postUrl,
-    	data:  param,
+    	data:  JSON.stringify(param),
 		dataType:'json',
 		cache: false,
 		headers: {
@@ -38,12 +44,20 @@ function post(postUrl,param,successHandler,errorHandler){
 }
 
 
-function get(getUrl,successHandler,errorHandler){
+/**
+ * Query method  
+ * @author zhuss
+ * @param gettUrl Address requested by GET request 
+ * @param successHandler  Successful handling function 
+ * @param errorHandler Error handling function 
+ */
+function get ( getUrl, param, successHandler, errorHandler ) {
 	var token = sessionStorage.getItem("token"); 	
 	$.ajax({
 		type: "GET",
 		contentType: "application/json", 
 		url: getUrl,
+		data:  param,
 		dataType:'json',
 		cache: false,
 		headers: {
@@ -54,9 +68,13 @@ function get(getUrl,successHandler,errorHandler){
 		},
 		error: function(data){
 			console.log(data);
+			
+			//get error messages 
 			var errJson = JSON.parse(data.responseText);
 			var errCode = errJson.errcode;
 			var errMsg = errJson.errmsg;
+			//50007 is the authentication error 
+			//Need to jump to the login page 
 			if(errCode == "50007"){
 				alert(errMsg);
 				window.location.href="login.html";
@@ -67,6 +85,13 @@ function get(getUrl,successHandler,errorHandler){
 }
 
 
+/**
+ * Delete method  
+ * @author zhuss
+ * @param deleteUrl Address requested by DELETE request 
+ * @param successHandler  Successful handling function 
+ * @param errorHandler Error handling function 
+ */
 function del(deleteUrl,successHandler,errorHandler){
 	var token = sessionStorage.getItem("token"); 	
 	$.ajax({
@@ -99,11 +124,32 @@ function delSucc(id){
 	$("#"+id).remove();
 }
 
+
+
+/**
+ * default Error Handler
+ * @param errJson Error Message
+ */
 function demoError(errJson){
 	var errCode = errJson.errcode;
 	var errMsg = errJson.errmsg;
 	alert(errMsg);
 }
+
+
+/**
+ * Whether the judgment is empty 
+ * @param value
+ * @returns {Boolean}
+ */
+function isEmpty(value){
+	if (value !== null && value !== undefined && value !== '' && typeof(reValue) !== "undefined") { 
+		return true;
+	} 
+	return false;
+}
+
+
 
 
 

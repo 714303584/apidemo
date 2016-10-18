@@ -22,6 +22,9 @@
 	var defaultLimit = 20;
 	var defaultSkip = 0;
 	
+	var isNextPage = false;
+	var currentPage = 0;
+	
 	
 	var diaHeight = getBodyHeight(0.5);
 	var diaHeight = getBodyWight(0.5);
@@ -30,9 +33,6 @@
 	
 	
 	function successHandler(data){
-		
-		
-		
 		var html = "";
 		var conferences = data.objects;
 		for(var i in conferences){  
@@ -46,6 +46,7 @@
 			
 			//html += "<td class='center'>"+ c.service_type +"</td>";
 			html += "<td class='center'>"+ serviceType[c.service_type] +"</td>";
+			html += "<td class='center'>"+ c.tenant +"</td>";
 			html += "<td class='center'>"+ c.description +"</td>";
 			html += "<td class='center'>"; 
 			
@@ -56,6 +57,12 @@
 			html += "</tr>";
 			$("#table_report_body").append(html);
 	    }  
+		
+		if(conferences.length == defaultLimit){
+			isNextPage = true;
+		}else if(conferences.length < defaultLimit){
+			isNextPage = false;
+		}
 		console.log(data);
 	}
 	
@@ -64,7 +71,8 @@
 	}
 	
 	function confernceInit(){
-		get("http://localhost:8080/api/v1/conference/?limit="+defaultLimit+"&skip="defaultSkip+,successHandler,errorHandler);
+		var param = {"limit":defaultLimit,"skip":defaultSkip};
+		get("http://localhost:8080/api/v1/conference/",param,successHandler,errorHandler);
 	}
 	
 	
@@ -124,6 +132,41 @@
 			diag.close();
 		 };
 		 diag.show();
+	}
+	
+	
+	
+	function nextPage(){
+		if(isNextPage){
+			var next = currentPage + 1;
+			var param = {"limit":defaultLimit,"skip":next*defaultLimit};
+			get("http://localhost:8080/api/v1/conference/",param,nextSuccess,demoError);
+		}else{
+			alert("已到尾页");
+		}
+	}
+	
+	function nextSuccess(data){
+		$("#table_report_body").empty();
+		currentPage = currentPage + 1;
+		successHandler(data);
+	}
+	
+	
+	function previousPage(){
+		if(currentPage == 0){
+			alert("已到首页");
+		}else if(currentPage > 0){
+			var previous = currentPage - 1;
+			var param = {"limit":defaultLimit,"skip":previous*defaultLimit};
+			get("http://localhost:8080/api/v1/conference/",param,previousSuccess,demoError);
+		}
+	}
+	
+	function previousSuccess(data){
+		$("#table_report_body").empty();
+		currentPage = currentPage - 1;
+		successHandler(data);
 	}
 	
 	
@@ -197,8 +240,9 @@
 		<tr>
 			<th class="center"  style="width: 50px;">序号</th>
 			<th class='center'>名称</th>
-			<th class='center'>资源路径</th>
-			<th class='center'>排序</th>
+			<th class='center'>会议室类型</th>
+			<th class='center'>所属租户</th>
+			<th class='center'>描述</th>
 			<th class='center'>操作</th>
 		</tr>
 		</thead>
@@ -242,8 +286,8 @@
 	<div class="page_and_btn">
 		<div>
 			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addmenu();">新增</a> 
-			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addmenu();">上一页</a> 
-			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addmenu();">下一页</a> 
+			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="previousPage();">上一页</a> 
+			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="nextPage();" >下一页</a> 
 		</div>
 	</div>
 	
