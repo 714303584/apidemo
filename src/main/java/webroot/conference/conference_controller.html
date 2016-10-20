@@ -19,17 +19,26 @@
 <script type="text/javascript">
 	var serviceType = {"50001":"虚拟会议室","50002":"虚拟听众席","50003":"虚拟接待室"};
 	
+	var protocolType = {"1":"H323","2":"SIP","3":"MSSIP","4":"RTMP","5":"WEBRTC"};
+	
+	var roleType = {"1":"HOSTS","2":"GUESTS"};
+	
 	var defaultLimit = 20;
 	var defaultSkip = 0;
 	
 	var isNextPage = false;
 	var currentPage = 0;
 	
+	var conference = null;
+	
+	var conferenceParticipants = null;
+	
 	
 	var diaHeight = getBodyHeight(0.5);
 	var diaHeight = getBodyWight(0.5);
 	$(top.hangge());
 	
+	var conferenceKey = null;
 	
 	
 	function successHandler(data){
@@ -74,8 +83,151 @@
 	
 	function confernceInit(){
 		var param = {"limit":defaultLimit,"skip":defaultSkip};
-		get("http://localhost:8080/api/v1/conference/",param,successHandler,errorHandler);
+		get("http://localhost:8080/api/v1/status/conference/",param,successHandler,errorHandler);
 	}
+	
+	
+	function unmuteAllParticipant(id){
+		
+		
+		
+		
+	}
+	
+	function unmuteAllParticipant(id){
+		
+		
+	}
+	
+	
+	
+	function  getConferenceSuccesss(c){
+		
+		conference = c;
+		
+		html = "<tr id='conference_'"+ c.id +"'>";
+		// html += "<td>"+c.id+"</td>";
+		//html += "<td class='center'>"+ c.id +"</td>";
+		html += "<td class='center'>"+ c.name +"</td>";
+		
+		//html += "<td class='center'>"+ c.service_type +"</td>";
+		html += "<td class='center'>"+ serviceType[c.service_type] +"</td>";
+		html += "<td class='center'>"+ c.tenant +"</td>";
+		html += "<td class='center'>"+ c.description +"</td>";
+		html += "<td class='center'>"; 
+		
+		html += " <a class='btn btn-small btn-success' onclick='muteAllGuests(\""+ c.id +"\");'>静音访客</a>";
+		html += " <a class='btn btn-small btn-success' onclick='unmuteAllGuests(\""+ c.id +"\");'>取消静音访客</a>";
+		html += " &nbsp;&nbsp;<a class='btn btn-small btn-success' onclick='closeConference(\""+ c.id +"\");'>关闭</a>";
+		
+		
+		html += "</td>";
+		html += "</tr>";
+		$("#table_report_body").append(html);
+		
+		var i = self.setInterval("getParticipants()",1000);
+	}
+	
+	function getParticipants(){
+		get("http://localhost:8080/api/v1/status/conference/"+conferenceKey+"/participants/",{},getParticipantsSucc,demoError);
+	}
+	
+	
+	function  getParticipantsSucc(data){
+		var html = "";
+		var participants = data;
+		for(var i in participants){  
+			var p = participants[i];
+			console.log(p);
+			var  pe = document.getElementById(p.id)
+			if(!pe){
+				html = "<tr id='"+ p.id +"'>";
+				// html += "<td>"+c.id+"</td>";
+				//html += "<td class='center'>"+ p.id +"</td>";
+				html += "<td id='display_name' class='center'>"+ p.display_name +"</td>";
+				html += "<td id='protocol' class='center'>"+ protocolType[p.protocol] +"</td>";
+				html += "<td id='role' class='center'>"+ roleType[p.role] +"</td>";
+				html += "<td id='is_muted' class='center'>"+ roleType[p.is_muted] +"</td>";
+				
+				//html += "<td class='center'>"+ c.service_type +"</td>";
+				//html += "<td class='center'>"+ serviceType[p.service_type] +"</td>";
+				//html += "<td class='center'>"+ c.tenant +"</td>";
+				//html += "<td class='center'>"+ c.description +"</td>";
+				html += "<td class='center'>"; 
+				
+				html += "&nbsp;<a class='btn btn-small btn-success' onclick='muteParticipant(\""+ p.id +"\");'>静音</a>";
+				html += "&nbsp;<a class='btn btn-small btn-success' onclick='unmuteParticipant(\""+ p.id +"\");'>取消静音</a>";
+				html += "&nbsp;<a class='btn btn-small btn-success' onclick='disconnectParticipant(\""+ p.id +"\");'>挂断</a>";
+				
+				html += "</td>";
+				html += "</tr>";
+				$("#participants_report_body").append(html);
+			}else{
+				var partEle = $(pe);
+				partEle.children("#display_name").text(p.display_name);
+				partEle.children("#protocol").text(protocolType[p.protocol]);
+				partEle.children("#role").text(roleType[p.role]);
+				if(p.is_muted){
+					partEle.children("#is_muted").text("已静音");
+				}else{
+					partEle.children("#is_muted").text("未静音");
+				}
+			}
+	    }  
+		
+		 $("#participants_report_body").children().each(function(){
+			  var child_id = $(this).attr("id");
+				var isRemove = true;
+				for(var j in participants){  
+					var parts = participants[j];
+					if(parts.id == child_id){
+						isRemove = false;
+						break;
+					}
+				}
+				if(isRemove){
+					$(this).remove();
+				}
+		 });
+		console.log(data);
+	}
+	
+	function muteAllGuests(id){
+		post("http://localhost:8080/api/v1/command/conference/"+ id + "/muteguests/",{},startConfSucc,demoError);
+	}
+	
+	function unmuteAllGuests(id){
+		post("http://localhost:8080/api/v1/command/conference/"+ id + "/unmuteguests/",{},startConfSucc,demoError);
+	}
+	
+	
+	
+	function closeConference(id){
+		post("http://localhost:8080/api/v1/command/conference/"+ id + "/stop/",{},startConfSucc,demoError);
+	}
+	
+	function disconnectParticipant(pid){
+		var cid = conference.id;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/disconnect/",{},startConfSucc,demoError);
+	}
+	
+	function unmuteParticipant(pid){
+		var cid = conference.id;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/unmute/",{},startConfSucc,demoError);
+	}
+	
+	function muteParticipant(pid){
+		var cid = conference.id;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/mute/",{},startConfSucc,demoError);
+	}
+	
+	
+	
+	
+	function getConferencestatus(){
+		get("http://localhost:8080/api/v1/status/conference/"+conferenceKey+"/",{},getConferenceSuccesss,demoError);
+	}
+	
 	
 	
 	function startConfSucc(data){
@@ -86,66 +238,6 @@
 	function startConferenc(id){
 		post("http://localhost:8080/api/v1/command/conference/"+ id + "/start/",{},startConfSucc,demoError);
 	}
-	
-	
-	//新增
-	function addmenu(){
-		 top.jzts();
-		 var diag = new top.Dialog();
-		 diag.Drag=true;
-		 diag.Title ="新增菜单";
-		 diag.Width = diaHeight;
-		 diag.Height = diaHeight;
-		 diag.URL = 'http://localhost:19999/conference/conference_add.html';
-		 diag.CancelEvent = function(){ //关闭事件
-			if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-				top.jzts(); 
-				setTimeout("location.reload()",100);
-			}
-			diag.close();
-		 };
-		 diag.show();
-	}
-	
-	//修改
-	function editmenu(menuId){
-		 top.jzts();
-	   	 var diag = new top.Dialog();
-		 diag.Drag=true;
-		 diag.Title ="编辑菜单";
-		 diag.URL = 'http://localhost:19999/menu/toEdit.do?MENU_ID='+menuId;
-		 diag.Width = 223;
-		 diag.Height = 256;
-		 diag.CancelEvent = function(){ //关闭事件
-			if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-				top.jzts(); 
-				setTimeout("location.reload()",100);
-				
-			}
-			diag.close();
-		 };
-		 diag.show();
-	}
-	
-	//编辑顶部菜单图标
-	function editTb(menuId){
-		 top.jzts();
-	   	 var diag = new top.Dialog();
-		 diag.Drag=true;
-		 diag.Title ="编辑图标";
-		 diag.URL = 'http://localhost:19999/menu/toEditicon.do?MENU_ID='+menuId;
-		 diag.Width = 530;
-		 diag.Height = 150;
-		 diag.CancelEvent = function(){ //关闭事件
-			if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-				top.jzts(); 
-				setTimeout("location.reload()",100);
-			}
-			diag.close();
-		 };
-		 diag.show();
-	}
-	
 	
 	
 	function nextPage(){
@@ -250,7 +342,7 @@
 	<table id="table_report" class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr>
-			<th class="center"  style="width: 50px;">序号</th>
+			<!-- <th class="center"  style="width: 50px;">序号</th> -->
 			<th class='center'>名称</th>
 			<th class='center'>会议室类型</th>
 			<th class='center'>所属租户</th>
@@ -297,15 +389,39 @@
 	
 	<div class="page_and_btn">
 		<div>
-			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addmenu();">新增</a> 
-			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="previousPage();">上一页</a> 
-			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="nextPage();" >下一页</a> 
+			<!-- 
+				&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addmenu();">新增</a> 
+				&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="previousPage();">上一页</a> 
+				&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="nextPage();" >下一页</a> 
+			 -->
+			 <table id="table_report" class="table table-striped table-bordered table-hover">
+			 	<caption>与会者列表</caption>
+				<thead>
+				<tr>
+					<!-- <th class="center"  style="width: 50px;">序号</th> -->
+					<th class='center'>名称</th>
+					<th class='center'>协议</th>
+					<th class='center'>角色</th>
+					<th class='center'>静音</th>
+					<th class='center'>操作</th>
+				</tr>
+				</thead>
+				
+				<tbody id="participants_report_body">
+				
+				
+				</tbody>
+			</table>
+			 
 		</div>
 	</div>
 	
 	<script type="text/javascript">
+	 
+	
 			$(document).ready(function() {
-				confernceInit();
+				conferenceKey = sessionStorage.getItem("conferenceKey"); 	
+				getConferencestatus();
 			});
 	</script>
 	
