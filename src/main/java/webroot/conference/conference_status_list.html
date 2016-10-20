@@ -84,8 +84,6 @@
 	}
 	
 	
-	
-	
 	function conferenceController(id){
 		sessionStorage.setItem("conferenceKey", id);
 		siMenu("ccontroller",'ccontroller1','会议控制','/conference/conference_controller.html');
@@ -100,7 +98,6 @@
 	function startConfSucc(data){
 		console.log(data);
 	}
-	
 	
 	function startConferenc(id){
 		post("http://localhost:8080/api/v1/command/conference/"+ id + "/start/",{},startConfSucc,demoError);
@@ -159,49 +156,8 @@
 			
 		}
 	}
+
 	
-	function openClose(menuId,curObj,trIndex){
-		var txt = $(curObj).text();
-		if(txt=="展开"){
-			$(curObj).text("折叠");
-			$("#tr"+menuId).after("<tr id='tempTr"+menuId+"'><td colspan='5'>数据载入中</td></tr>");
-			if(trIndex%2==0){
-				$("#tempTr"+menuId).addClass("main_table_even");
-			}
-			var url = "http://localhost:19999/menu/sub.do?MENU_ID="+menuId+"&guid="+new Date().getTime();
-			$.get(url,function(data){
-				if(data.length>0){
-					var html = "";
-					$.each(data,function(i){
-						html = "<tr style='height:24px;line-height:24px;' name='subTr"+menuId+"'>";
-						html += "<td></td>";
-						html += "<td><span style='width:80px;display:inline-block;'></span>";
-						if(i==data.length-1)
-							html += "<img src='/static/images/joinbottom.gif' style='vertical-align: middle;'/>";
-						else
-							html += "<img src='/static/images/join.gif' style='vertical-align: middle;'/>";
-						html += "<span style='width:100px;text-align:left;display:inline-block;'>"+this.MENU_NAME+"</span>";
-						html += "</td>";
-						html += "<td>"+this.MENU_URL+"</td>";
-						html += "<td class='center'>"+this.MENU_ORDER+"</td>";
-						html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='editmenu(\""+this.MENU_ID+"\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\""+this.MENU_ID+"\",false)'><i class='icon-trash'></i></a></td>";
-						html += "</tr>";
-						$("#tempTr"+menuId).before(html);
-					});
-					$("#tempTr"+menuId).remove();
-					if(trIndex%2==0){
-						$("tr[name='subTr"+menuId+"']").addClass("main_table_even");
-					}
-				}else{
-					$("#tempTr"+menuId+" > td").html("没有相关数据");
-				}
-			},"json");
-		}else{
-			$("#tempTr"+menuId).remove();
-			$("tr[name='subTr"+menuId+"']").remove();
-			$(curObj).text("展开");
-		}
-	}
 </script>
 </head>
 
@@ -223,34 +179,6 @@
 		</tbody>
 		
 		
-			<!-- 
-			<c:choose>
-				<c:when test="${not empty menuList}">
-					<c:forEach items="${menuList}" var="menu" varStatus="vs">
-					<tr id="tr${menu.MENU_ID }">
-					<td class="center">${vs.index+1}</td>
-					<td class='center'><i class="${menu.MENU_ICON }">&nbsp;</i>${menu.MENU_NAME }&nbsp;
-						<c:if test="${menu.MENU_TYPE == '1' }">
-						<span class="label label-success arrowed">系统</span>
-						</c:if>
-						<c:if test="${menu.MENU_TYPE != '1' }">
-						<span class="label label-important arrowed-in">业务</span>
-						</c:if>
-					</td>
-					<td>${menu.MENU_URL == '#'? '': menu.MENU_URL}</td>
-					<td class='center'>${menu.MENU_ORDER }</td>
-					<td style="width: 25%;">
-					<a class='btn btn-mini btn-warning' onclick="openClose('${menu.MENU_ID }',this,${vs.index })" >展开</a>
-					<a class='btn btn-mini btn-purple' title="图标" onclick="editTb('${menu.MENU_ID }')" ><i class='icon-picture'></i></a>
-					<a class='btn btn-mini btn-info' title="编辑" onclick="editmenu('${menu.MENU_ID }')" ><i class='icon-edit'></i></a>
-					<a class='btn btn-mini btn-danger' title="删除"  onclick="delmenu('${menu.MENU_ID }',true)"><i class='icon-trash'></i></a>
-					</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
-			 -->
 	</table>
 	
 	<div class="page_and_btn">

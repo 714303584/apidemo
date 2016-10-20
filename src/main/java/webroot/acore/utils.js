@@ -151,6 +151,28 @@ function isEmpty(value){
 
 
 
+function find(array,key,value){
+	for (var i in array) {
+		var ele = array[i];
+		var keyValue = ele[key];
+		if(keyValue == value ) return true;
+	}
+	return false;
+}
+
+
+function find(array,key,value){
+	for (var i in array) {
+		var ele = array[i];
+		var keyValue = ele[key];
+		if(keyValue == value ) return ele;
+	}
+	return null;
+}
+
+
+
+
 
 
 var locat = (window.location+'').split('/'); 

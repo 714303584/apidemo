@@ -23,6 +23,7 @@
 	
 	var roleType = {"1":"HOSTS","2":"GUESTS"};
 	
+	
 	var defaultLimit = 20;
 	var defaultSkip = 0;
 	
@@ -41,42 +42,6 @@
 	var conferenceKey = null;
 	
 	
-	function successHandler(data){
-		var html = "";
-		var conferences = data.objects;
-		for(var i in conferences){  
-			var c = conferences[i];
-			console.log(c);
-			
-			html = "<tr id='conference_'"+ c.id +"'>";
-			// html += "<td>"+c.id+"</td>";
-			html += "<td class='center'>"+ c.id +"</td>";
-			html += "<td class='center'>"+ c.name +"</td>";
-			
-			//html += "<td class='center'>"+ c.service_type +"</td>";
-			html += "<td class='center'>"+ serviceType[c.service_type] +"</td>";
-			html += "<td class='center'>"+ c.tenant +"</td>";
-			html += "<td class='center'>"+ c.description +"</td>";
-			html += "<td class='center'>"; 
-			
-			html += "<a class='btn btn-mini btn-danger' title='开始'  onclick='startConferenc("+ c.id +")'><i class='icon-trash'></i></a>";
-			html += "<a class='btn btn-mini btn-info' title='编辑' onclick='editmenu("+ c.id +")' ><i class='icon-edit'></i></a>";
-			html += "<a class='btn btn-mini btn-danger' title='删除'  onclick='delmenu("+ c.id +")'><i class='icon-trash'></i></a>";
-			
-			
-			html += "</td>";
-			html += "</tr>";
-			$("#table_report_body").append(html);
-	    }  
-		
-		if(conferences.length == defaultLimit){
-			isNextPage = true;
-		}else if(conferences.length < defaultLimit){
-			isNextPage = false;
-		}
-		console.log(data);
-	}
-	
 	function errorHandler(data){
 		console.log(data);
 	}
@@ -85,20 +50,6 @@
 		var param = {"limit":defaultLimit,"skip":defaultSkip};
 		get("http://localhost:8080/api/v1/status/conference/",param,successHandler,errorHandler);
 	}
-	
-	
-	function unmuteAllParticipant(id){
-		
-		
-		
-		
-	}
-	
-	function unmuteAllParticipant(id){
-		
-		
-	}
-	
 	
 	
 	function  getConferenceSuccesss(c){
@@ -116,9 +67,10 @@
 		html += "<td class='center'>"+ c.description +"</td>";
 		html += "<td class='center'>"; 
 		
-		html += " <a class='btn btn-small btn-success' onclick='muteAllGuests(\""+ c.id +"\");'>静音访客</a>";
-		html += " <a class='btn btn-small btn-success' onclick='unmuteAllGuests(\""+ c.id +"\");'>取消静音访客</a>";
-		html += " &nbsp;&nbsp;<a class='btn btn-small btn-success' onclick='closeConference(\""+ c.id +"\");'>关闭</a>";
+		html += " &nbsp;<a class='btn btn-small btn-success' onclick='muteAllGuests(\""+ c.id +"\");'>静音访客</a>";
+		html += " &nbsp;<a class='btn btn-small btn-success' onclick='unmuteAllGuests(\""+ c.id +"\");'>取消静音访客</a>";
+		html += " &nbsp;<a class='btn btn-small btn-success' onclick='setLayout(\""+ c.id +"\");'>分屏设置</a>";
+		html += " &nbsp;<a class='btn btn-small btn-success' onclick='closeConference(\""+ c.id +"\");'>关闭</a>";
 		
 		
 		html += "</td>";
@@ -126,6 +78,30 @@
 		$("#table_report_body").append(html);
 		
 		var i = self.setInterval("getParticipants()",1000);
+	}
+	
+	
+	function setLayout(cid){
+		top.jzts();
+		
+			var diagHeight = document.body.scrollHeight*0.6;
+
+			var diagWidth = document.body.scrollWidth*0.6;
+
+		 var diag = new top.Dialog();
+		 diag.Drag=true;
+		 diag.Title ="设置分屏";
+		 diag.Width = diagHeight;
+		 diag.Height = diagWidth;
+		 diag.URL = 'http://localhost:19999/conference/conference_layout_set.html';
+		 diag.CancelEvent = function(){ //关闭事件
+			if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+				top.jzts(); 
+				setTimeout("location.reload()",100);
+			}
+			diag.close();
+		 };
+		 diag.show();
 	}
 	
 	function getParticipants(){
@@ -147,17 +123,27 @@
 				html += "<td id='display_name' class='center'>"+ p.display_name +"</td>";
 				html += "<td id='protocol' class='center'>"+ protocolType[p.protocol] +"</td>";
 				html += "<td id='role' class='center'>"+ roleType[p.role] +"</td>";
-				html += "<td id='is_muted' class='center'>"+ roleType[p.is_muted] +"</td>";
+				if(p.is_muted){
+					html += "<td id='is_muted' class='center'>已静音</td>";
+				}else{
+					html += "<td id='is_muted' class='center'>未静音</td>";
+				}
+				
 				
 				//html += "<td class='center'>"+ c.service_type +"</td>";
 				//html += "<td class='center'>"+ serviceType[p.service_type] +"</td>";
 				//html += "<td class='center'>"+ c.tenant +"</td>";
 				//html += "<td class='center'>"+ c.description +"</td>";
-				html += "<td class='center'>"; 
+				html += "<td id='controll_td' class='center'>"; 
 				
 				html += "&nbsp;<a class='btn btn-small btn-success' onclick='muteParticipant(\""+ p.id +"\");'>静音</a>";
 				html += "&nbsp;<a class='btn btn-small btn-success' onclick='unmuteParticipant(\""+ p.id +"\");'>取消静音</a>";
 				html += "&nbsp;<a class='btn btn-small btn-success' onclick='disconnectParticipant(\""+ p.id +"\");'>挂断</a>";
+				if(p.role == 1){
+					html += "&nbsp;<a id='changeRoleBtn' class='btn btn-small btn-success' onclick='changeGuestParticipant(\""+ p.id +"\");'>GUESTS</a>";
+				}else{
+					html += "&nbsp;<a  id='changeRoleBtn' class='btn btn-small btn-success' onclick='changeHostParticipant(\""+ p.id +"\");'>HOSTS</a>";
+				}
 				
 				html += "</td>";
 				html += "</tr>";
@@ -172,6 +158,23 @@
 				}else{
 					partEle.children("#is_muted").text("未静音");
 				}
+
+			
+				
+				var participant = find(conferenceParticipants,"id",p.id);
+				
+				if(participant.role != p.role){
+					var roleBtn = partEle.find("#changeRoleBtn");
+					roleBtn.text(roleType[p.role]);
+					roleBtn.unbind( "click" );
+					if(p.role == 1){
+						roleBtn.attr("onclick","'changeGuestParticipant(\""+ p.id +"\")''");
+					}else{
+						roleBtn.attr("onclick","'changeHostParticipant(\""+ p.id +"\")''");
+					}
+				}
+				
+				
 			}
 	    }  
 		
@@ -190,6 +193,19 @@
 				}
 		 });
 		console.log(data);
+		
+		conferenceParticipants = participants;
+		
+	}
+	
+	function changeGuestParticipant(pid){
+		var cid = conference.id;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/role/",{"role":2},startConfSucc,demoError);
+	}
+	
+	function changeHostParticipant(pid){
+		var cid = conference.id;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/role/",{"role":1},startConfSucc,demoError);
 	}
 	
 	function muteAllGuests(id){
@@ -293,48 +309,6 @@
 		}
 	}
 	
-	function openClose(menuId,curObj,trIndex){
-		var txt = $(curObj).text();
-		if(txt=="展开"){
-			$(curObj).text("折叠");
-			$("#tr"+menuId).after("<tr id='tempTr"+menuId+"'><td colspan='5'>数据载入中</td></tr>");
-			if(trIndex%2==0){
-				$("#tempTr"+menuId).addClass("main_table_even");
-			}
-			var url = "http://localhost:19999/menu/sub.do?MENU_ID="+menuId+"&guid="+new Date().getTime();
-			$.get(url,function(data){
-				if(data.length>0){
-					var html = "";
-					$.each(data,function(i){
-						html = "<tr style='height:24px;line-height:24px;' name='subTr"+menuId+"'>";
-						html += "<td></td>";
-						html += "<td><span style='width:80px;display:inline-block;'></span>";
-						if(i==data.length-1)
-							html += "<img src='/static/images/joinbottom.gif' style='vertical-align: middle;'/>";
-						else
-							html += "<img src='/static/images/join.gif' style='vertical-align: middle;'/>";
-						html += "<span style='width:100px;text-align:left;display:inline-block;'>"+this.MENU_NAME+"</span>";
-						html += "</td>";
-						html += "<td>"+this.MENU_URL+"</td>";
-						html += "<td class='center'>"+this.MENU_ORDER+"</td>";
-						html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='editmenu(\""+this.MENU_ID+"\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\""+this.MENU_ID+"\",false)'><i class='icon-trash'></i></a></td>";
-						html += "</tr>";
-						$("#tempTr"+menuId).before(html);
-					});
-					$("#tempTr"+menuId).remove();
-					if(trIndex%2==0){
-						$("tr[name='subTr"+menuId+"']").addClass("main_table_even");
-					}
-				}else{
-					$("#tempTr"+menuId+" > td").html("没有相关数据");
-				}
-			},"json");
-		}else{
-			$("#tempTr"+menuId).remove();
-			$("tr[name='subTr"+menuId+"']").remove();
-			$(curObj).text("展开");
-		}
-	}
 </script>
 </head>
 
