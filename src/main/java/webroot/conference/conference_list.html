@@ -73,7 +73,8 @@
 	}
 	
 	function confernceInit(){
-		var param = {"limit":defaultLimit,"skip":defaultSkip};
+		var tenant = sessionStorage.getItem("username");
+		var param = {"limit":defaultLimit, "skip":0, "tenant__equal":"\""+tenant+"\""};
 		get("http://localhost:8080/api/v1/conference/",param,successHandler,errorHandler);
 	}
 	
@@ -151,7 +152,8 @@
 	function nextPage(){
 		if(isNextPage){
 			var next = currentPage + 1;
-			var param = {"limit":defaultLimit,"skip":next*defaultLimit};
+			var tenant = sessionStorage.getItem("username");
+			var param = {"limit":defaultLimit, "skip":next*defaultLimit, "tenant":tenant};
 			get("http://localhost:8080/api/v1/conference/",param,nextSuccess,demoError);
 		}else{
 			alert("已到尾页");
@@ -201,48 +203,6 @@
 		}
 	}
 	
-	function openClose(menuId,curObj,trIndex){
-		var txt = $(curObj).text();
-		if(txt=="展开"){
-			$(curObj).text("折叠");
-			$("#tr"+menuId).after("<tr id='tempTr"+menuId+"'><td colspan='5'>数据载入中</td></tr>");
-			if(trIndex%2==0){
-				$("#tempTr"+menuId).addClass("main_table_even");
-			}
-			var url = "http://localhost:19999/menu/sub.do?MENU_ID="+menuId+"&guid="+new Date().getTime();
-			$.get(url,function(data){
-				if(data.length>0){
-					var html = "";
-					$.each(data,function(i){
-						html = "<tr style='height:24px;line-height:24px;' name='subTr"+menuId+"'>";
-						html += "<td></td>";
-						html += "<td><span style='width:80px;display:inline-block;'></span>";
-						if(i==data.length-1)
-							html += "<img src='/static/images/joinbottom.gif' style='vertical-align: middle;'/>";
-						else
-							html += "<img src='/static/images/join.gif' style='vertical-align: middle;'/>";
-						html += "<span style='width:100px;text-align:left;display:inline-block;'>"+this.MENU_NAME+"</span>";
-						html += "</td>";
-						html += "<td>"+this.MENU_URL+"</td>";
-						html += "<td class='center'>"+this.MENU_ORDER+"</td>";
-						html += "<td><a class='btn btn-mini btn-info' title='编辑' onclick='editmenu(\""+this.MENU_ID+"\")'><i class='icon-edit'></i></a> <a class='btn btn-mini btn-danger' title='删除' onclick='delmenu(\""+this.MENU_ID+"\",false)'><i class='icon-trash'></i></a></td>";
-						html += "</tr>";
-						$("#tempTr"+menuId).before(html);
-					});
-					$("#tempTr"+menuId).remove();
-					if(trIndex%2==0){
-						$("tr[name='subTr"+menuId+"']").addClass("main_table_even");
-					}
-				}else{
-					$("#tempTr"+menuId+" > td").html("没有相关数据");
-				}
-			},"json");
-		}else{
-			$("#tempTr"+menuId).remove();
-			$("tr[name='subTr"+menuId+"']").remove();
-			$(curObj).text("展开");
-		}
-	}
 </script>
 </head>
 

@@ -6,6 +6,254 @@
 		<title></title>
 		<meta name="description" content="overview & stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+				<style type="text/css">
+								.chk_1,.chk_2,.chk_3,.chk_4 {
+					    display: none;
+					}
+					 
+					/*******STYLE 1*******/
+					.chk_1 + label {
+						background-color: #FFF;
+						border: 1px solid #C1CACA;
+						box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+						padding: 9px;
+						border-radius: 5px;
+						display: inline-block;
+						position: relative;
+						margin-right: 30px;
+					}
+					.chk_1 + label:active {
+						box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+					}
+					
+					.chk_1:checked + label {
+						background-color: #ECF2F7;
+						border: 1px solid #92A1AC;
+						box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+						color: #243441;
+					}
+					
+					.chk_1:checked + label:after {
+						content: '\2714';
+						position: absolute;
+						top: 0px;
+						left: 0px;
+						color: #758794;
+						width: 100%;
+						text-align: center;
+						font-size: 1.4em;
+						padding: 1px 0 0 0;
+						vertical-align: text-top;
+					}
+					
+					
+					/*******STYLE 2*******/
+					.chk_2 + label {
+						background-color: #F37900;
+						padding: 18px 20px 18px 23px;
+						box-shadow: inset 0 50px 37px -30px rgba(255, 222, 197, 0.3), 0 0 13px rgba(0, 0, 0, 0.6);
+						border-radius: 1000px;
+						display: inline-block;
+						position: relative;
+						border-top: 1px solid #ECA14F;
+						margin-right: 30px;
+						color: #FFF;
+						font-size: 1.7em;
+						width: 113px;
+						text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+						border-bottom: 1px solid #552B09;
+					}
+					
+					.chk_2 + label:hover  {
+						border-top: 1px solid #FC8C1E;
+						background: #FC8C1E;
+						box-shadow: inset 0 -50px 37px -30px rgba(255, 222, 197, 0.07), 0 0 13px rgba(0, 0, 0, 0.6);
+					}
+					
+					.chk_2 + label:active  {
+						border-top: none;
+						background: #FC8C1E;
+						padding: 19px 20px 18px 23px;
+						box-shadow: inset 0 3px 8px rgba(129, 69, 13, 0.3), inset 0 -50px 37px -30px rgba(255, 222, 197, 0.07), 0 0 13px rgba(0, 0, 0, 0.6);	
+					}
+					
+					.chk_2 + label:after {
+						content: ' ';
+						border-radius: 100px;
+						width: 32px;
+						position: absolute;
+						top: 12px;
+						right: 12px;
+						box-shadow: inset 0px 16px 40px rgba(0, 0, 0, 0.4);
+						height: 32px;
+					}
+					
+					.chk_2 + label:before {
+						content: ' ';
+						border-radius: 100px;
+						width: 20px;
+						position: absolute;
+						top: 18px;
+						right: 18px;
+						z-index: 999;
+						box-shadow: inset 0px 16px 40px #FFF;
+						height: 20px;
+						display: none;
+					}
+					
+					.chk_2:checked + label:before {
+						display: block;
+					}
+					
+					/*******STYLE 3*******/
+					
+					.chk_3 + label {
+						background-color: #fafbfa;
+						padding: 9px;
+						border-radius: 50px;
+						display: inline-block;
+						position: relative;
+						margin-right: 30px;
+						-webkit-transition: all 0.1s ease-in;
+						transition: all 0.1s ease-in;
+						width: 40px;
+						height: 15px;
+					}
+					
+					.chk_3  + label:after {
+						content: ' ';
+						position: absolute;
+						top: 0;
+						-webkit-transition: box-shadow 0.1s ease-in;
+						transition: box-shadow 0.1s ease-in;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						border-radius: 100px;
+						box-shadow: inset 0 0 0 0 #eee, 0 0 1px rgba(0,0,0,0.4);
+					}
+					
+					.chk_3  + label:before {
+						content: ' ';
+						position: absolute;
+						background: white;
+						top: 1px;
+						left: 1px;
+						z-index: 999999;
+						width: 31px;
+						-webkit-transition: all 0.1s ease-in;
+						transition: all 0.1s ease-in;
+						height: 31px;
+						border-radius: 100px;
+						box-shadow: 0 3px 1px rgba(0,0,0,0.05), 0 0px 1px rgba(0,0,0,0.3);
+					}
+					
+					.chk_3:active + label:after {
+						box-shadow: inset 0 0 0 20px #eee, 0 0 1px #eee;
+					}
+					
+					.chk_3:active + label:before {
+						width: 37px;
+					}
+					
+					.chk_3:checked:active + label:before {
+						width: 37px;
+						left: 20px;
+					}
+					
+					.chk_3  + label:active {
+						box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+					}
+					
+					.chk_3:checked + label:before {
+						content: ' ';
+						position: absolute;
+						left: 26px;
+						border-radius: 100px;
+					}
+					
+					.chk_3:checked + label:after {
+						content: ' ';
+						font-size: 1.5em;
+						position: absolute;
+						background: #4cda60;
+						box-shadow: 0 0 1px #4cda60;
+					}
+					
+					
+					/*******STYLE 4*******/
+					.chk_4 + label {
+						background-color: #FFF;
+						padding: 11px 9px;
+						border-radius: 7px;
+						display: inline-block;
+						position: relative;
+						margin-right: 30px;
+						background: #F7836D;
+						width: 58px;
+						height: 10px;
+						box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1), 0 0 10px rgba(245, 146, 146, 0.4);
+					}
+					
+					.chk_4 + label:before {
+						content: ' ';
+						position: absolute;
+						background: #FFF;
+						top: 0px;
+						z-index: 99999;
+						left: 0px;
+						width: 24px;
+						color: #FFF;
+						height: 32px;
+						border-radius: 7px;
+						box-shadow: 0 0 1px rgba(0,0,0,0.6);
+					}
+					
+					.chk_4 + label:after {
+						content: 'å…³é—­';	
+						position: absolute;
+						top: 7px;
+						left: 37px;
+						font-size: 1.2em;
+						color: white;
+						font-weight: bold;
+						left: 8px;
+						padding: 5px;
+						top: 4px;
+						border-radius: 100px;
+					}
+					
+					.chk_4:checked + label {
+						background: #67A5DF;
+						box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1), 0 0 10px rgba(146, 196, 245, 0.4);
+					}
+					
+					.chk_4:checked + label:after {
+						content: 'å¼€å¯';
+						left: 10px;
+					}
+					
+					.chk_4:checked + label:before {
+						content: ' ';
+						position: absolute;
+						z-index: 99999;
+						left: 52px;
+					}
+					
+					
+					.chk_4 + label:after {
+						left: 35px;	
+					}	
+					
+					#checkbox_d2 + label:after, #checkbox_d2 + label:before, #checkbox label {	
+						-webkit-transition: all 0.1s ease-in;
+						transition: all 0.1s ease-in;
+					}
+		
+		
+		</style>
+		
 		<link href="/static/css/bootstrap.min.css" rel="stylesheet" />
 		<link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="/static/css/font-awesome.min.css" />
@@ -23,6 +271,8 @@
 	
 	var roleType = {"1":"HOSTS","2":"GUESTS"};
 	
+	var partServiceType = {"1":"连接中", "2":"等待中", "3":"ivr", "4":"会议中", "5":"gateway"};
+	
 	
 	var defaultLimit = 20;
 	var defaultSkip = 0;
@@ -33,6 +283,9 @@
 	var conference = null;
 	
 	var conferenceParticipants = null;
+	
+	
+	var isReDialParticipants = [];
 	
 	
 	var diaHeight = getBodyHeight(0.5);
@@ -56,52 +309,104 @@
 		
 		conference = c;
 		
-		html = "<tr id='conference_'"+ c.id +"'>";
-		// html += "<td>"+c.id+"</td>";
-		//html += "<td class='center'>"+ c.id +"</td>";
-		html += "<td class='center'>"+ c.name +"</td>";
+		var  c_tr  = document.getElementById("conference_"+c.uuid)
 		
-		//html += "<td class='center'>"+ c.service_type +"</td>";
-		html += "<td class='center'>"+ serviceType[c.service_type] +"</td>";
-		html += "<td class='center'>"+ c.tenant +"</td>";
-		html += "<td class='center'>"+ c.description +"</td>";
-		html += "<td class='center'>"; 
-		
-		html += " &nbsp;<a class='btn btn-small btn-success' onclick='muteAllGuests(\""+ c.id +"\");'>静音访客</a>";
-		html += " &nbsp;<a class='btn btn-small btn-success' onclick='unmuteAllGuests(\""+ c.id +"\");'>取消静音访客</a>";
-		html += " &nbsp;<a class='btn btn-small btn-success' onclick='setLayout(\""+ c.id +"\");'>分屏设置</a>";
-		html += " &nbsp;<a class='btn btn-small btn-success' onclick='closeConference(\""+ c.id +"\");'>关闭</a>";
-		
-		
-		html += "</td>";
-		html += "</tr>";
-		$("#table_report_body").append(html);
-		
-		var i = self.setInterval("getParticipants()",1000);
+		if(!c_tr){
+			html = "<tr id='conference_"+ c.uuid +"'>";
+			// html += "<td>"+c.uuid+"</td>";
+			//html += "<td class='center'>"+ c.uuid +"</td>";
+			html += "<td class='center' id='conference_name' >"+ c.name +"</td>";
+			
+			//html += "<td class='center'>"+ c.service_type +"</td>";
+			html += "<td class='center' id='conference_service_type' >"+ serviceType[c.service_type] +"</td>";
+			if(c.is_locked){
+				html += "<td  id='c_is_locked' class='center'>是</td>";
+			}else{
+				html += "<td id='c_is_locked'  class='center'>否</td>";
+			}
+			
+			html += "<td id='c_is_tag' class='center'>"+ c.description +"</td>";
+			html += "<td class='center'>"; 
+			
+			if(c.guests_muted){
+				html += " &nbsp;<a id='unmuteAllGuestsBtn' class='btn btn-small btn-success' onclick='unmuteAllGuests(\""+ c.uuid +"\");'>取消静音访客</a>";
+			}else{
+				html += " &nbsp;<a id='unmuteAllGuestsBtn' class='btn btn-small btn-success' onclick='muteAllGuests(\""+ c.uuid +"\");'>静音访客</a>";
+			}
+			html += " &nbsp;<a class='btn btn-small btn-success' onclick='setLayout(\""+ c.uuid +"\");'>分屏设置</a>";
+			html += " &nbsp;<a class='btn btn-small btn-success' onclick='closeConference(\""+ c.uuid +"\");'>结束会议</a>";
+			if(c.is_locked){
+				html += " &nbsp;<a id='confernceLockBtn' class='btn btn-small btn-success' onclick='unlockConference(\""+ c.uuid +"\");' >解锁定会议</a>";
+			}else{
+				html += " &nbsp;<a id='confernceLockBtn' class='btn btn-small btn-success' onclick='lockConference(\""+ c.uuid +"\");' >锁定会议</a>";
+			}
+			
+			html += " &nbsp;<a id='stopPolling' class='btn btn-small btn-success' onclick='stopPolling();' >停止轮询</a>";
+			
+			
+			html += "</td>";
+			html += "</tr>";
+			$("#table_report_body").append(html);
+			var i = self.setInterval("getParticipants()",1000);
+		}else{
+			var jc_tr = $(c_tr);
+			
+			jc_tr.find("#conference_name").text(c.name);
+			jc_tr.find("#conference_service_type").text(serviceType[c.service_type]);
+			if(c.is_locked){
+				jc_tr.find("#c_is_locked").text("是");
+			}else{
+				jc_tr.find("#c_is_locked").text("否");
+			}
+			
+			var unmuteAllGuestsBtn = jc_tr.find("#unmuteAllGuestsBtn");
+			if(c.guests_muted){
+				unmuteAllGuestsBtn.removeAttr("onclick");
+				unmuteAllGuestsBtn.text("取消静音访客");
+				unmuteAllGuestsBtn.click(function() {
+					unmuteAllGuests(c.uuid);
+				});
+			}else{
+				unmuteAllGuestsBtn.removeAttr("onclick");
+				unmuteAllGuestsBtn.text("静音访客");
+				unmuteAllGuestsBtn.click(function() {
+					muteAllGuests(c.uuid);
+				});
+			}
+			
+			var confernceLockBtn = jc_tr.find("#confernceLockBtn");
+			if(c.is_locked){
+				confernceLockBtn.removeAttr("onclick");
+				confernceLockBtn.text("解锁定会议");
+				confernceLockBtn.click(function() {
+					unlockConference(c.uuid);
+				});
+				
+			}else{
+				confernceLockBtn.removeAttr("onclick");
+				confernceLockBtn.text("锁定会议");
+				confernceLockBtn.click(function() {
+					lockConference(c.uuid);
+				});
+			}
+		}
 	}
 	
 	
-	function setLayout(cid){
-		top.jzts();
-		
-			var diagHeight = document.body.scrollHeight*0.6;
-
-			var diagWidth = document.body.scrollWidth*0.6;
-
-		 var diag = new top.Dialog();
-		 diag.Drag=true;
-		 diag.Title ="设置分屏";
-		 diag.Width = diagHeight;
-		 diag.Height = diagWidth;
-		 diag.URL = 'http://localhost:19999/conference/conference_layout_set.html';
-		 diag.CancelEvent = function(){ //关闭事件
-			if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-				top.jzts(); 
-				setTimeout("location.reload()",100);
-			}
-			diag.close();
-		 };
-		 diag.show();
+	function lockConference(cid){
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/lock/",{},startConfSucc,demoError);
+		setTimeout("getConferencestatus()",3000);
+	}
+	
+	function unlockConference(cid){
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/unlock/",{},startConfSucc,demoError);
+		setTimeout("getConferencestatus()",3000);
+	}
+	
+	var dialog = null;
+	
+	function closeDialog(){
+		dialog.close();
 	}
 	
 	function getParticipants(){
@@ -115,12 +420,12 @@
 		for(var i in participants){  
 			var p = participants[i];
 			console.log(p);
-			var  pe = document.getElementById(p.id)
+			var  pe = document.getElementById(p.uuid);
 			if(!pe){
-				html = "<tr id='"+ p.id +"'>";
-				// html += "<td>"+c.id+"</td>";
-				//html += "<td class='center'>"+ p.id +"</td>";
-				html += "<td id='display_name' class='center'>"+ p.display_name +"</td>";
+				html = "<tr id='"+ p.uuid +"'>";
+				// html += "<td>"+c.uuid+"</td>";
+				//html += "<td class='center'>"+ p.uuid +"</td>";
+				html += "<td id='display_name' class='center'>"+ p.uri +"</td>";
 				html += "<td id='protocol' class='center'>"+ protocolType[p.protocol] +"</td>";
 				html += "<td id='role' class='center'>"+ roleType[p.role] +"</td>";
 				if(p.is_muted){
@@ -136,84 +441,226 @@
 				//html += "<td class='center'>"+ c.description +"</td>";
 				html += "<td id='controll_td' class='center'>"; 
 				
-				html += "&nbsp;<a class='btn btn-small btn-success' onclick='muteParticipant(\""+ p.id +"\");'>静音</a>";
-				html += "&nbsp;<a class='btn btn-small btn-success' onclick='unmuteParticipant(\""+ p.id +"\");'>取消静音</a>";
-				html += "&nbsp;<a class='btn btn-small btn-success' onclick='disconnectParticipant(\""+ p.id +"\");'>挂断</a>";
-				if(p.role == 1){
-					html += "&nbsp;<a id='changeRoleBtn' class='btn btn-small btn-success' onclick='changeGuestParticipant(\""+ p.id +"\");'>GUESTS</a>";
+				if(p.is_muted){
+					//onclick='muteParticipant(\""+ p.uuid +"\");'
+					html += "&nbsp;<a id='is_muted_btn"+p.uuid +"' pid='"+p.uuid+"' class='btn btn-small btn-success' >静音</a>";
 				}else{
-					html += "&nbsp;<a  id='changeRoleBtn' class='btn btn-small btn-success' onclick='changeHostParticipant(\""+ p.id +"\");'>HOSTS</a>";
+					//onclick='unmuteParticipant(\""+ p.uuid +"\");
+					html += "&nbsp;<a id='is_muted_btn"+p.uuid +"' pid='"+p.uuid+"' class='btn btn-small btn-success' '>取消静音</a>";
 				}
+				
+			
+				if(p.role == 1){
+					//onclick='changeGuestParticipant(\""+ p.uuid +"\");
+					html += "&nbsp;<a id='changeRoleBtn"+p.uuid +"' pid='"+p.uuid+"' class='btn btn-small btn-success' >GUESTS</a>";
+				}else{
+					//onclick='changeHostParticipant(\""+ p.uuid +"\");
+					html += "&nbsp;<a  id='changeRoleBtn"+p.uuid +"' pid='"+p.uuid+"' class='btn btn-small btn-success' >HOSTS</a>";
+				}
+				
+				if(p.rx_presentation_policy){
+					//onclick='allowrxPresentation(\""+ p.uuid +"\");'
+					html += "&nbsp;<a id='rx_presentation_policy_btn"+p.uuid +"' pid='"+p.uuid+"' class='btn btn-small btn-success' >参与共享</a>";
+				}else{
+					//onclick='denyrxPresentation(\""+ p.uuid +"\");'
+					html += "&nbsp;<a  id='rx_presentation_policy_btn"+p.uuid +"' pid='"+p.uuid+"' class='btn btn-small btn-success' >屏蔽共享</a>";
+				}
+				
+				html += "&nbsp;<a class='btn btn-small btn-success' pid='"+p.uuid+"' onclick='disconnectParticipant(\""+ p.uuid +"\");'>挂断</a>";
+				
+				//html += "&nbsp;<a class='btn btn-small btn-success' pid='"+p.uuid+"' onclick='spotlightOnParticipant(\""+ p.uuid +"\");'>关注开启</a>";
+				
+				//html += "&nbsp;<a class='btn btn-small btn-success' pid='"+p.uuid+"' onclick='spotlightOffParticipant(\""+ p.uuid +"\");'>关注关闭</a>";
+				
+				if(p.service_type == 2){
+					html += "&nbsp;<a  id='service_type_btn"+p.uuid +"' pid='"+p.uuid+"' class='btn btn-small btn-success' >允许进入</a>";
+				}
+				
 				
 				html += "</td>";
 				html += "</tr>";
 				$("#participants_report_body").append(html);
 			}else{
 				var partEle = $(pe);
-				partEle.children("#display_name").text(p.display_name);
+				partEle.children("#display_name").text(p.uri);
 				partEle.children("#protocol").text(protocolType[p.protocol]);
 				partEle.children("#role").text(roleType[p.role]);
+				var muteBtn = partEle.find("#is_muted_btn"+p.uuid);
+				muteBtn.unbind( "click" );
 				if(p.is_muted){
+					muteBtn.text("取消静音");
+					muteBtn.click(function() {
+						unmuteParticipant($(this).attr("pid"));
+					});
 					partEle.children("#is_muted").text("已静音");
 				}else{
+					muteBtn.text("静音");
+					muteBtn.click(function() {
+						muteParticipant($(this).attr("pid"));
+					});
 					partEle.children("#is_muted").text("未静音");
 				}
-
-			
 				
-				var participant = find(conferenceParticipants,"id",p.id);
+				var rxppBtn = partEle.find("#rx_presentation_policy_btn"+p.uuid);
+				rxppBtn.unbind( "click" );
+				if(p.rx_presentation_policy){
+					rxppBtn.text("屏蔽共享");
+					rxppBtn.click(function() {
+						denyrxPresentation($(this).attr("pid"));
+					});
+					
+				}else{
+					rxppBtn.text("参与共享");
+					rxppBtn.click(function() {
+						allowrxPresentation($(this).attr("pid"));
+					});
+				}
 				
-				if(participant.role != p.role){
-					var roleBtn = partEle.find("#changeRoleBtn");
-					roleBtn.text(roleType[p.role]);
-					roleBtn.unbind( "click" );
-					if(p.role == 1){
-						roleBtn.attr("onclick","'changeGuestParticipant(\""+ p.id +"\")''");
-					}else{
-						roleBtn.attr("onclick","'changeHostParticipant(\""+ p.id +"\")''");
-					}
+				var roleBtn = partEle.find("#changeRoleBtn"+p.uuid);
+				roleBtn.text(roleType[p.role]);
+				roleBtn.unbind( "click" );
+				if(p.role == 1){
+					roleBtn.text("GUESTS");
+					roleBtn.click(function() {
+						changeGuestParticipant($(this).attr("pid"));
+					});
+				}else{
+					roleBtn.text("HOSTS");
+					roleBtn.click(function() {
+						changeHostParticipant($(this).attr("pid"));
+					});
 				}
 				
 				
+				if(p.service_type == 2){
+					var serviceTypeBtn = document.getElementById("service_type_btn"+p.uuid);
+					if(serviceTypeBtn){
+						$(serviceTypeBtn).unbind("click");
+						$(serviceTypeBtn).click(function(){
+							unlockParticipant($(this).attr("pid"));
+						});
+					}else{
+					 	var html = "&nbsp;<a  id='service_type_btn"+p.uuid +"' pid='"+p.uuid+"' class='btn btn-small btn-success' >允许进入</a>";
+					 	partEle.find("#controll_td").append(html);
+					 	var serviceTypeBtn = document.getElementById("#service_type_btn"+p.uuid);
+						$(serviceTypeBtn).unbind("click");
+						$(serviceTypeBtn).click(function(){
+							unlockParticipant($(this).attr("pid"));
+						});
+					}
+				}else{
+					var serviceTypeBtn = document.getElementById("service_type_btn"+p.uuid);
+					if(serviceTypeBtn){ $(serviceTypeBtn).remove();}
+					
+				}
+				
+				//if(participant.role != p.role){}
 			}
+			
 	    }  
 		
 		 $("#participants_report_body").children().each(function(){
 			  var child_id = $(this).attr("id");
 				var isRemove = true;
+				var reDialPart = {};
 				for(var j in participants){  
 					var parts = participants[j];
-					if(parts.id == child_id){
+					if(parts.uuid == child_id){
 						isRemove = false;
+						reDialPart = parts;
 						break;
 					}
+					
+					
 				}
 				if(isRemove){
 					$(this).remove();
+					var param = {};
+					
+					var oldPart = find(conferenceParticipants,"uuid",child_id);
+					
+					conferenceParticipants
+					
+					if(oldPart != null){
+						if(oldPart.protocol == 2 && $("#is_reDial").is(':checked')){
+							param["destination"] = oldPart.uri;
+							param["display_name"] = oldPart.uri;
+							param["protocol"] = oldPart.protocol;
+							param["role"] = oldPart.role;
+							var cid = sessionStorage.getItem("conferenceKey"); 	
+							post("http://localhost:8080/api/v1/command/conference/"+cid+"/participants/dial/",param,dialSuccess,demoError);
+						}
+						
+					}
 				}
 		 });
+		 
+		 
+		 
 		console.log(data);
 		
 		conferenceParticipants = participants;
 		
 	}
 	
+	function dialSuccess(data){
+		
+	}
+	
+	
+	function spotlightOnParticipant(pid){
+		var cid = conference.uuid;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/spotlighton/",{},startConfSucc,demoError);
+		
+	}
+	
+	
+	function spotlightOffParticipant(pid){
+		var cid = conference.uuid;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/spotlightoff/",{},startConfSucc,demoError);
+	}
+	
+	
+	function unlockParticipant(pid){
+		var cid = conference.uuid;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/unlock/",{},startConfSucc,demoError);
+	}
+	
+	
+	
+	function allowrxPresentation(pid){
+		var cid = conference.uuid;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/allowrxpresentation/",{},startConfSucc,demoError);
+	}
+	
+	
+	
+	
+	function denyrxPresentation(pid){
+		var cid = conference.uuid;
+		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/denyrxpresentation/",{},startConfSucc,demoError);
+	}
+	
+	
+	
 	function changeGuestParticipant(pid){
-		var cid = conference.id;
+		var cid = conference.uuid;
 		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/role/",{"role":2},startConfSucc,demoError);
 	}
 	
 	function changeHostParticipant(pid){
-		var cid = conference.id;
+		var cid = conference.uuid;
 		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/role/",{"role":1},startConfSucc,demoError);
 	}
 	
 	function muteAllGuests(id){
 		post("http://localhost:8080/api/v1/command/conference/"+ id + "/muteguests/",{},startConfSucc,demoError);
+		setTimeout("getConferencestatus()",3000);
 	}
 	
 	function unmuteAllGuests(id){
 		post("http://localhost:8080/api/v1/command/conference/"+ id + "/unmuteguests/",{},startConfSucc,demoError);
+		setTimeout("getConferencestatus()",3000);
 	}
 	
 	
@@ -223,17 +670,17 @@
 	}
 	
 	function disconnectParticipant(pid){
-		var cid = conference.id;
+		var cid = conference.uuid;
 		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/disconnect/",{},startConfSucc,demoError);
 	}
 	
 	function unmuteParticipant(pid){
-		var cid = conference.id;
+		var cid = conference.uuid;
 		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/unmute/",{},startConfSucc,demoError);
 	}
 	
 	function muteParticipant(pid){
-		var cid = conference.id;
+		var cid = conference.uuid;
 		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/mute/",{},startConfSucc,demoError);
 	}
 	
@@ -313,13 +760,15 @@
 </head>
 
 <body>
-	<table id="table_report" class="table table-striped table-bordered table-hover">
+<div class="page_and_btn">
+		<div>
+			<table id="table_report" class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr>
 			<!-- <th class="center"  style="width: 50px;">序号</th> -->
 			<th class='center'>名称</th>
 			<th class='center'>会议室类型</th>
-			<th class='center'>所属租户</th>
+			<th class='center'>是否锁定</th>
 			<th class='center'>描述</th>
 			<th class='center'>操作</th>
 		</tr>
@@ -329,37 +778,31 @@
 		
 		
 		</tbody>
-		
-		
-			<!-- 
-			<c:choose>
-				<c:when test="${not empty menuList}">
-					<c:forEach items="${menuList}" var="menu" varStatus="vs">
-					<tr id="tr${menu.MENU_ID }">
-					<td class="center">${vs.index+1}</td>
-					<td class='center'><i class="${menu.MENU_ICON }">&nbsp;</i>${menu.MENU_NAME }&nbsp;
-						<c:if test="${menu.MENU_TYPE == '1' }">
-						<span class="label label-success arrowed">系统</span>
-						</c:if>
-						<c:if test="${menu.MENU_TYPE != '1' }">
-						<span class="label label-important arrowed-in">业务</span>
-						</c:if>
-					</td>
-					<td>${menu.MENU_URL == '#'? '': menu.MENU_URL}</td>
-					<td class='center'>${menu.MENU_ORDER }</td>
-					<td style="width: 25%;">
-					<a class='btn btn-mini btn-warning' onclick="openClose('${menu.MENU_ID }',this,${vs.index })" >展开</a>
-					<a class='btn btn-mini btn-purple' title="图标" onclick="editTb('${menu.MENU_ID }')" ><i class='icon-picture'></i></a>
-					<a class='btn btn-mini btn-info' title="编辑" onclick="editmenu('${menu.MENU_ID }')" ><i class='icon-edit'></i></a>
-					<a class='btn btn-mini btn-danger' title="删除"  onclick="delmenu('${menu.MENU_ID }',true)"><i class='icon-trash'></i></a>
-					</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
-			</c:choose>
-			 -->
 	</table>
+		</div>
+	</div>
+	
+	
+			
+	<div class="page_and_btn">
+		<div>
+			&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="addParticipant();">呼叫与会者</a> 
+			&nbsp;&nbsp; 断线重拨:
+									<input type="checkbox" id="is_reDial" class="chk_1" ><label for="is_reDial"></label>
+									
+			&nbsp;&nbsp;轮询时间：<select id="select_polling_time">
+				<option value="15000"> 15秒 </option>
+				<option value="20000"> 20秒 </option>
+				<option value="25000"> 25秒 </option>
+				<option value="35000"> 35秒 </option>
+				<option value="60000"> 60秒 </option>
+			</select>
+			
+				&nbsp;&nbsp;限制会议人数:<input id="conf_supperlimit" type="number"  /> <a class="btn btn-small btn-success" onclick="setUpperLimit();">限制会议人数</a> 
+			
+			
+		</div>
+	</div>
 	
 	<div class="page_and_btn">
 		<div>
@@ -369,7 +812,7 @@
 				&nbsp;&nbsp;<a class="btn btn-small btn-success" onclick="nextPage();" >下一页</a> 
 			 -->
 			 <table id="table_report" class="table table-striped table-bordered table-hover">
-			 	<caption>与会者列表</caption>
+			 	<caption><h1> 与会者列表</h1></caption>
 				<thead>
 				<tr>
 					<!-- <th class="center"  style="width: 50px;">序号</th> -->
@@ -388,10 +831,254 @@
 			</table>
 			 
 		</div>
+		
 	</div>
 	
+	
 	<script type="text/javascript">
+		var isPolling = false;
+		var conferenceLayout = null;
+		var pollingId = null;
+		
+		var pollingVernier = 1;
+		function changeLayout(layout){
+			
+			conferenceLayout = layout;
+			
+			var apiLayout = {};
+			
+			isPolling = false;
+			
+			
+			var hostLayout = {};
+			hostLayout["audience"] = layout["layouts"][0]["audience"];
+			hostLayout["layout"] =  layout["layouts"][0]["layout"];
+			hostLayout["vad_backfill"] =  layout["layouts"][0]["vad_backfill"];
+			hostLayout["plus_n"] =  layout["layouts"][0]["plus_n"];
+			hostLayout["actors_overlay_text"] = layout["layouts"][0]["actors_overlay_text"];
+			hostLayout["remove_self"] =  layout["layouts"][0]["remove_self"];
+			
+			
+			var gestsLayout = {};
+			gestsLayout["audience"] = layout["layouts"][1]["audience"];
+			gestsLayout["layout"] = layout["layouts"][1]["layout"];
+			gestsLayout["vad_backfill"] = layout["layouts"][1]["vad_backfill"];
+			gestsLayout["plus_n"] =  layout["layouts"][1]["plus_n"];
+			gestsLayout["actors_overlay_text"] =  layout["layouts"][1]["actors_overlay_text"];
+			gestsLayout["remove_self"] = layout["layouts"][1]["remove_self"];
+			
+			
+			var las = [hostLayout,gestsLayout];
+			
+			apiLayout["layouts"] = las;
+			
+			
+			var hostActor = new Array();
+
+			var guestActor = new Array();
+			
+			
+			var hostActors = layout["layouts"][0]["actors"];
+			for(var i in hostActors){
+				var hostLayoutActor  =  hostActors[i]
+				
+				var puuid = hostLayoutActor[0];
+				if("auto" === puuid){
+					break;
+				}
+				hostActor.push(puuid);
+				if(hostLayoutActor.length > 1){
+					isPolling = true;
+				}
+			}
+			
+			
+			var guestActors = layout["layouts"][1]["actors"];
+			for(var i in guestActors){
+				var guestLayoutActor  =  guestActors[i]
+				var puuid = guestLayoutActor[0];
+				if("auto" === puuid){
+					break;
+				}
+				guestActor.push(puuid);
+				if(guestLayoutActor.length > 1){
+					isPolling = true;
+				}
+			}
+			
+			apiLayout["layouts"][0]["actors"] = hostActor;
+			apiLayout["layouts"][1]["actors"] = guestActor;
+			
+			console.log(apiLayout);
+			post("http://localhost:8080/api/v1/command/conference/"+ conferenceKey + "/overridelayout/",apiLayout,startConfSucc,demoError);
+			dialog.close();
+			
+			
+			if(isPolling){
+				var pollingTime =  $("#select_polling_time").val();
+				pollingId =  self.setTimeout("layoutPolling()",pollingTime);
+			}else{
+				if(pollingId != null){
+					clearTimeout(pollingId)
+				}
+			}
+			
+		}
+		
+		function setUpperLimit(){
+			var upperLimit = $("#conf_supperlimit").val();
+			var upperLimitValue = parseInt(upperLimit); 
+			// /api/v1/command/conference/:cuuid/upper/
+			post("http://localhost:8080/api/v1/command/conference/"+ conferenceKey + "/upper/",{"upper":upperLimitValue},upperSucc,demoError);
+			
+		}
+		
+		function upperSucc(data){
+			alert("设置成功");
+		}
+		
+		
+		
+		function layoutPolling(){
+			var layout = conferenceLayout;
+			
+			
+			var apiLayout = {};
+			
+			var hostLayout = {};
+			hostLayout["audience"] = layout["layouts"][0]["audience"];
+			hostLayout["layout"] =  layout["layouts"][0]["layout"];
+			hostLayout["vad_backfill"] =  layout["layouts"][0]["vad_backfill"];
+			hostLayout["plus_n"] =  layout["layouts"][0]["plus_n"];
+			hostLayout["actors_overlay_text"] = layout["layouts"][0]["actors_overlay_text"];
+			hostLayout["remove_self"] =  layout["layouts"][0]["remove_self"];
+			
+			
+			var gestsLayout = {};
+			gestsLayout["audience"] = layout["layouts"][1]["audience"];
+			gestsLayout["layout"] = layout["layouts"][1]["layout"];
+			gestsLayout["vad_backfill"] = layout["layouts"][1]["vad_backfill"];
+			gestsLayout["plus_n"] =  layout["layouts"][1]["plus_n"];
+			gestsLayout["actors_overlay_text"] =  layout["layouts"][1]["actors_overlay_text"];
+			gestsLayout["remove_self"] = layout["layouts"][1]["remove_self"];
+			
+			var las = [hostLayout,gestsLayout];
+			
+			apiLayout["layouts"] = las;
+			
+			var hostActor = new Array();
+
+			var guestActor = new Array();
+			
+			var isTop = true;
+			
+			var hostActors = layout["layouts"][0]["actors"];
+			for(var i in hostActors){
+				var hostLayoutActor  =  hostActors[i]
+				var puuid = hostLayoutActor[0];
+				if("auto" === puuid){
+					break;
+				}
+				if(hostLayoutActor.length > 1 && (hostLayoutActor.length -1) >= pollingVernier){
+					hostActor.push(hostLayoutActor[pollingVernier]);
+					isTop = false;
+				}else{
+					hostActor.push(puuid);
+				}
+			}
+			
+			
+			var guestActors = layout["layouts"][1]["actors"];
+			for(var i in guestActors){
+				var guestLayoutActor  =  guestActors[i]
+				var puuid = guestLayoutActor[0];
+				if("auto" === puuid){
+					break;
+				}
+				
+				if(guestLayoutActor.length > 1 && (guestLayoutActor.length -1) >= pollingVernier){
+					guestActor.push(guestLayoutActor[pollingVernier])
+					isTop = false;
+				}else{
+					guestActor.push(puuid);
+				}
+			}
+			
+			if(isTop){
+				pollingVernier = 0;
+			}else{
+				pollingVernier ++;
+			}
+			
+			apiLayout["layouts"][0]["actors"] = hostActor;
+			apiLayout["layouts"][1]["actors"] = guestActor;
+			
+			post("http://localhost:8080/api/v1/command/conference/"+ conferenceKey + "/overridelayout/",apiLayout,startConfSucc,demoError);
+			
+			if(isPolling){
+				var pollingTime =  $("#select_polling_time").val();
+				pollingId =  self.setTimeout("layoutPolling()",pollingTime);
+			}else{
+				if(pollingId != null){
+					clearTimeout(pollingId)
+				}
+			}
+			
+		}
+		
+		function stopPolling(){
+			isPolling = false;
+			if(pollingId != null){
+				clearTimeout(pollingId)
+			}
+		}
+		
+		
+		
+		function setLayout(cid){
+			top.jzts();
+			
+				var diagHeight = document.body.scrollHeight*0.6;
+
+				var diagWidth = document.body.scrollWidth*0.6;
+
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="设置分屏";
+			 diag.Width = 800;
+			 diag.Height = 1200;
+			 diag.URL = 'http://localhost:19999/conference/conference_layout_set.html';
+			 diag.CancelEvent = function(){ //关闭事件
+				if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					top.jzts(); 
+					setTimeout("location.reload()",100);
+				}
+				diag.close();
+			 };
+			 diag.show();
+			 dialog = diag;
+		}
+		
+	
 	 
+			function addParticipant(){
+				 top.jzts();
+				 var diag = new top.Dialog();
+				 diag.Drag=true;
+				 diag.Title ="新增与会者";
+				 diag.Width = diaHeight;
+				 diag.Height = diaHeight;
+				 diag.URL = 'http://localhost:19999/conference/conference_dial.html';
+				 diag.CancelEvent = function(){ //关闭事件
+					if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+						top.jzts(); 
+						setTimeout("location.reload()",100);
+					}
+					diag.close();
+				 };
+				 diag.show();
+				 dialog = diag;
+			}
 	
 			$(document).ready(function() {
 				conferenceKey = sessionStorage.getItem("conferenceKey"); 	

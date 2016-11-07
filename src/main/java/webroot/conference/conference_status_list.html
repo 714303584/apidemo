@@ -39,19 +39,23 @@
 			var c = conferences[i];
 			console.log(c);
 			
-			html = "<tr id='conference_'"+ c.id +"'>";
-			// html += "<td>"+c.id+"</td>";
-			//html += "<td class='center'>"+ c.id +"</td>";
+			html = "<tr id='conference_'"+ c.uuid +"'>";
+			// html += "<td>"+c.uuid+"</td>";
+			//html += "<td class='center'>"+ c.uuid +"</td>";
 			html += "<td class='center'>"+ c.name +"</td>";
 			
 			//html += "<td class='center'>"+ c.service_type +"</td>";
 			html += "<td class='center'>"+ serviceType[c.service_type] +"</td>";
-			html += "<td class='center'>"+ c.tenant +"</td>";
-			html += "<td class='center'>"+ c.description +"</td>";
+			if(c.is_locked){
+				html += "<td  id='c_is_locked' class='center'>是</td>";
+			}else{
+				html += "<td id='c_is_locked'  class='center'>否</td>";
+			}
+			
 			html += "<td class='center'>"; 
 			
-			html += " <a class='btn btn-small btn-success' onclick='conferenceController(\""+ c.id +"\");'>控制</a>";
-			html += " &nbsp;&nbsp;<a class='btn btn-small btn-success' onclick='closeConference(\""+ c.id +"\");'>关闭</a>";
+			html += " <a class='btn btn-small btn-success' onclick='conferenceController(\""+ c.uuid +"\");'>控制</a>";
+			html += " &nbsp;&nbsp;<a class='btn btn-small btn-success' onclick='closeConference(\""+ c.uuid +"\");'>关闭</a>";
 			
 			
 			html += "</td>";
@@ -167,8 +171,7 @@
 		<tr>
 			<th class='center'>名称</th>
 			<th class='center'>会议室类型</th>
-			<th class='center'>所属租户</th>
-			<th class='center'>描述</th>
+			<th class='center'>是否锁定</th>
 			<th class='center'>操作</th>
 		</tr>
 		</thead>

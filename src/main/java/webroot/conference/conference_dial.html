@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<base href="http://localhost:19999">
+		
+		<meta charset="utf-8" />
+		<title>菜单</title>
+		<meta name="description" content="overview & stats" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="/static/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="/static/css/ace.min.css" />
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+			<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" href="/static/css/ace-responsive.min.css" />
+		<link rel="stylesheet" href="/static/css/ace-skins.min.css" />
+		<script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+		<!--提示框-->
+		<script type="text/javascript" src="/static/js/jquery.tips.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/acore/utils.js"></script>
+</head>
+
+<script type="text/javascript">
+	$(top.hangge());
+	$(document).ready(function(){
+		
+		
+	}); 
+
+	
+	
+	function sucessHandler(data){
+		console.log(data);
+		$("#zhongxin").hide();
+		$("#zhongxin2").show();
+		parent.document.getElementById("mainFrame").contentWindow.document.getElementById("page_ccontroller").contentWindow.closeDialog();
+	}
+	
+	function errorHandler(data){
+		console.log(data);
+		demoError(data);
+	}
+	
+
+	//保存
+	function save(){
+		
+		var destination = $("#destination").val();
+		var param = {};
+		if(isEmpty(destination)){
+			alert("与会者地址不能为空");
+			return;
+		}
+		
+		var display_name = $("#display_name").val();
+		
+		if(isEmpty(display_name)){
+			alert("显示名称不能为空");
+			return;
+		}
+		
+		var role = $("#pts_role").val();
+		var protocol = $("#dial_protocol").val();
+		
+		param["destination"] = destination;
+		param["display_name"] = display_name;
+		param["protocol"] = parseInt(protocol);
+		param["role"] = parseInt(role);
+		var cid = sessionStorage.getItem("conferenceKey"); 	
+		post("http://localhost:8080/api/v1/command/conference/"+cid+"/participants/dial/",param,sucessHandler,errorHandler);
+		
+	}
+	
+	function setType(value){
+		$("#MENU_TYPE").val(value);
+	}
+	
+</script>
+
+<body>
+	<div id="zhongxin" class="container">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">终端地址: </label>
+										<div class="col-sm-9">
+											<input type="text" id="destination" class="col-xs-10 col-sm-5" required="required">
+										</div>
+									</div>
+									<div class="space-4"></div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 显示名称: </label>
+
+										<div class="col-sm-9">
+											<input type="text" id="display_name"  class="col-xs-10 col-sm-5">
+											<span class="help-inline col-xs-12 col-sm-7">
+												<span class="middle"></span>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 角色: </label>
+
+										<div class="col-sm-9">
+											<select id="pts_role">
+												<option value="2">访客</option>
+												<option value="1">主席</option>
+											</select>
+											<span class="help-inline col-xs-12 col-sm-7">
+												<span class="middle"></span>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 协议: </label>
+										<div class="col-sm-9">
+											<select id="dial_protocol">
+												<option value="2">SIP</option>
+												<option value="1">H323</option>
+												<option value="3">MSSIP</option>
+												<option value="4">RTMP</option>
+											</select>
+											<span class="help-inline col-xs-12 col-sm-7">
+												<span class="middle"></span>
+											</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="button" onclick="save()">
+												<i class="icon-ok bigger-110"></i>
+												Submit
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="button">
+												<i class="icon-undo bigger-110"></i>
+												Reset
+											</button>
+										</div>
+									</div>
+								</div>
+								<div id="zhongxin2" class="center" style="display:none"><img src="static/images/jzx.gif" style="width: 50px;" /><br/><h4 class="lighter block green"></h4></div>
+</body>
+</html>
