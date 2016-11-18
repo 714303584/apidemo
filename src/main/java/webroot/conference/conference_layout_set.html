@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<base href="http://localhost:19999">
+<base href="http://192.168.3.148:19999">
 
 <meta charset="utf-8" />
 <title>菜单</title>
@@ -754,7 +754,7 @@
 	$(document).ready(function() {
 		conferenceKey = sessionStorage.getItem("conferenceKey"); 	
 		
-		get("http://localhost:8080/api/v1/status/conference/"+conferenceKey+"/participants/",{},getParticipantsSucc,demoError);
+		get(conferenceControllerPath+"/api/v1/status/conference/"+conferenceKey+"/participants/",{},getParticipantsSucc,demoError);
 		
 		
 	});
@@ -894,8 +894,22 @@
 					
 				}else if("layout_one_seven" == layoutSelect){
 					hostLayoutCode = 1;
+					$("#layout_one_seven").find("div[name='screen']").each(function(){
+						var dActors = new Array();
+						$(this).find("select").each(function(){
+							dActors.push($(this).val());
+						});
+						hostActors.push(dActors);
+					});
 				}else if("layout_one_twentyone" == layoutSelect){
 					hostLayoutCode = 2;
+					$("#layout_one_twentyone").find("div[name='screen']").each(function(){
+						var dActors = new Array();
+						$(this).find("select").each(function(){
+							dActors.push($(this).val());
+						});
+						hostActors.push(dActors);
+					});
 				}
 				
 				
@@ -912,8 +926,22 @@
 					
 				}else if("layout_one_seven_g" == guestLayoutSelect){
 					guestLayoutCode = 1;
+					$("#layout_one_seven_g").find("div[name='screen']").each(function(){
+						var dActors = new Array();
+						$(this).find("select").each(function(){
+							dActors.push($(this).val());
+						});
+						guestActors.push(dActors);
+					});
 				}else if("layout_one_twentyone_g" == guestLayoutSelect){
 					guestLayoutCode = 2;
+					$("#layout_one_seven_g").find("div[name='screen']").each(function(){
+						var dActors = new Array();
+						$(this).find("select").each(function(){
+							dActors.push($(this).val());
+						});
+						guestActors.push(dActors);
+					});
 				}
 				
 			 	var hostOtherLayoutSet = $("#host_other");

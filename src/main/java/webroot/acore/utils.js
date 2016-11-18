@@ -1,4 +1,11 @@
 
+//var conferenceControllerPath = "http://192.188.188.151:8080";
+
+var conferenceControllerPath = "http://192.168.3.149:8080";
+//var conferenceControllerPath = "http://192.168.3.234:8080";
+
+//var conferenceControllerPath = "http://192.168.3.148:8080";
+
 
 function getBodyHeight(percentum){
 	return document.body.scrollHeight*percentum;
@@ -52,7 +59,8 @@ function post(postUrl,param,successHandler,errorHandler){
  * @param errorHandler Error handling function 
  */
 function get ( getUrl, param, successHandler, errorHandler ) {
-	var token = sessionStorage.getItem("token"); 	
+	var token = sessionStorage.getItem("token"); 
+	console.log(token);
 	$.ajax({
 		type: "GET",
 		contentType: "application/json", 

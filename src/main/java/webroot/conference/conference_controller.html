@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<base href="http://localhost:19999">
+		<base href="http://192.168.3.148:19999">
 		<meta charset="utf-8" />
 		<title></title>
 		<meta name="description" content="overview & stats" />
@@ -267,7 +267,7 @@
 <script type="text/javascript">
 	var serviceType = {"50001":"虚拟会议室","50002":"虚拟听众席","50003":"虚拟接待室"};
 	
-	var protocolType = {"1":"H323","2":"SIP","3":"MSSIP","4":"RTMP","5":"WEBRTC"};
+	var protocolType = {"1":"H323","2":"SIP","3":"MSSIP","4":"RTMP","5":"WEBRTC","6":"API"};
 	
 	var roleType = {"1":"HOSTS","2":"GUESTS"};
 	
@@ -301,7 +301,7 @@
 	
 	function confernceInit(){
 		var param = {"limit":defaultLimit,"skip":defaultSkip};
-		get("http://localhost:8080/api/v1/status/conference/",param,successHandler,errorHandler);
+		get("http://192.168.3.148:8080/api/v1/status/conference/",param,successHandler,errorHandler);
 	}
 	
 	
@@ -394,12 +394,12 @@
 	
 	
 	function lockConference(cid){
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/lock/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/lock/",{},startConfSucc,demoError);
 		setTimeout("getConferencestatus()",3000);
 	}
 	
 	function unlockConference(cid){
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/unlock/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/unlock/",{},startConfSucc,demoError);
 		setTimeout("getConferencestatus()",3000);
 	}
 	
@@ -410,13 +410,13 @@
 	}
 	
 	function getParticipants(){
-		get("http://localhost:8080/api/v1/status/conference/"+conferenceKey+"/participants/",{},getParticipantsSucc,demoError);
+		get(conferenceControllerPath+"/api/v1/status/conference/"+conferenceKey+"/participants/",{},getParticipantsSucc,demoError);
 	}
 	
 	
 	function  getParticipantsSucc(data){
 		var html = "";
-		var participants = data;
+		var participants = data["participants"];
 		for(var i in participants){  
 			var p = participants[i];
 			console.log(p);
@@ -588,7 +588,7 @@
 							param["protocol"] = oldPart.protocol;
 							param["role"] = oldPart.role;
 							var cid = sessionStorage.getItem("conferenceKey"); 	
-							post("http://localhost:8080/api/v1/command/conference/"+cid+"/participants/dial/",param,dialSuccess,demoError);
+							post(conferenceControllerPath+"/api/v1/command/conference/"+cid+"/participants/dial/",param,dialSuccess,demoError);
 						}
 						
 					}
@@ -610,27 +610,27 @@
 	
 	function spotlightOnParticipant(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/spotlighton/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/spotlighton/",{},startConfSucc,demoError);
 		
 	}
 	
 	
 	function spotlightOffParticipant(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/spotlightoff/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/spotlightoff/",{},startConfSucc,demoError);
 	}
 	
 	
 	function unlockParticipant(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/unlock/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/unlock/",{},startConfSucc,demoError);
 	}
 	
 	
 	
 	function allowrxPresentation(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/allowrxpresentation/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/allowrxpresentation/",{},startConfSucc,demoError);
 	}
 	
 	
@@ -638,57 +638,57 @@
 	
 	function denyrxPresentation(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/denyrxpresentation/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/denyrxpresentation/",{},startConfSucc,demoError);
 	}
 	
 	
 	
 	function changeGuestParticipant(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/role/",{"role":2},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/role/",{"role":2},startConfSucc,demoError);
 	}
 	
 	function changeHostParticipant(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/role/",{"role":1},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/role/",{"role":1},startConfSucc,demoError);
 	}
 	
 	function muteAllGuests(id){
-		post("http://localhost:8080/api/v1/command/conference/"+ id + "/muteguests/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ id + "/muteguests/",{},startConfSucc,demoError);
 		setTimeout("getConferencestatus()",3000);
 	}
 	
 	function unmuteAllGuests(id){
-		post("http://localhost:8080/api/v1/command/conference/"+ id + "/unmuteguests/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ id + "/unmuteguests/",{},startConfSucc,demoError);
 		setTimeout("getConferencestatus()",3000);
 	}
 	
 	
 	
 	function closeConference(id){
-		post("http://localhost:8080/api/v1/command/conference/"+ id + "/stop/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ id + "/stop/",{},startConfSucc,demoError);
 	}
 	
 	function disconnectParticipant(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/disconnect/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/disconnect/",{},startConfSucc,demoError);
 	}
 	
 	function unmuteParticipant(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/unmute/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/unmute/",{},startConfSucc,demoError);
 	}
 	
 	function muteParticipant(pid){
 		var cid = conference.uuid;
-		post("http://localhost:8080/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/mute/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ cid + "/participants/"+ pid +"/mute/",{},startConfSucc,demoError);
 	}
 	
 	
 	
 	
 	function getConferencestatus(){
-		get("http://localhost:8080/api/v1/status/conference/"+conferenceKey+"/",{},getConferenceSuccesss,demoError);
+		get(conferenceControllerPath+"/api/v1/status/conference/"+conferenceKey+"/",{},getConferenceSuccesss,demoError);
 	}
 	
 	
@@ -699,7 +699,7 @@
 	
 	
 	function startConferenc(id){
-		post("http://localhost:8080/api/v1/command/conference/"+ id + "/start/",{},startConfSucc,demoError);
+		post(conferenceControllerPath+"/api/v1/command/conference/"+ id + "/start/",{},startConfSucc,demoError);
 	}
 	
 	
@@ -707,7 +707,7 @@
 		if(isNextPage){
 			var next = currentPage + 1;
 			var param = {"limit":defaultLimit,"skip":next*defaultLimit};
-			get("http://localhost:8080/api/v1/conference/",param,nextSuccess,demoError);
+			get(conferenceControllerPath+"/api/v1/conference/",param,nextSuccess,demoError);
 		}else{
 			alert("已到尾页");
 		}
@@ -726,7 +726,7 @@
 		}else if(currentPage > 0){
 			var previous = currentPage - 1;
 			var param = {"limit":defaultLimit,"skip":previous*defaultLimit};
-			get("http://localhost:8080/api/v1/conference/",param,previousSuccess,demoError);
+			get(conferenceControllerPath+"/api/v1/conference/",param,previousSuccess,demoError);
 		}
 	}
 	
@@ -751,7 +751,7 @@
 		}	
 		if(flag){
 			top.jzts();
-			del("http://localhost:8080/api/v1/conference/"+conferenceId+"/",delSuc,demoError);
+			del(conferenceControllerPath+"/api/v1/conference/"+conferenceId+"/",delSuc,demoError);
 			
 		}
 	}
@@ -910,7 +910,7 @@
 			apiLayout["layouts"][1]["actors"] = guestActor;
 			
 			console.log(apiLayout);
-			post("http://localhost:8080/api/v1/command/conference/"+ conferenceKey + "/overridelayout/",apiLayout,startConfSucc,demoError);
+			post(conferenceControllerPath+"/api/v1/command/conference/"+ conferenceKey + "/overridelayout/",apiLayout,startConfSucc,demoError);
 			dialog.close();
 			
 			
@@ -929,7 +929,7 @@
 			var upperLimit = $("#conf_supperlimit").val();
 			var upperLimitValue = parseInt(upperLimit); 
 			// /api/v1/command/conference/:cuuid/upper/
-			post("http://localhost:8080/api/v1/command/conference/"+ conferenceKey + "/upper/",{"upper":upperLimitValue},upperSucc,demoError);
+			post(conferenceControllerPath+"/api/v1/command/conference/"+ conferenceKey + "/upper/",{"upper":upperLimitValue},upperSucc,demoError);
 			
 		}
 		
@@ -1013,7 +1013,7 @@
 			apiLayout["layouts"][0]["actors"] = hostActor;
 			apiLayout["layouts"][1]["actors"] = guestActor;
 			
-			post("http://localhost:8080/api/v1/command/conference/"+ conferenceKey + "/overridelayout/",apiLayout,startConfSucc,demoError);
+			post(conferenceControllerPath+"/api/v1/command/conference/"+ conferenceKey + "/overridelayout/",apiLayout,startConfSucc,demoError);
 			
 			if(isPolling){
 				var pollingTime =  $("#select_polling_time").val();
@@ -1047,7 +1047,7 @@
 			 diag.Title ="设置分屏";
 			 diag.Width = 800;
 			 diag.Height = 1200;
-			 diag.URL = 'http://localhost:19999/conference/conference_layout_set.html';
+			 diag.URL = 'http://192.168.3.148:19999/conference/conference_layout_set.html';
 			 diag.CancelEvent = function(){ //关闭事件
 				if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					top.jzts(); 
@@ -1068,7 +1068,7 @@
 				 diag.Title ="新增与会者";
 				 diag.Width = diaHeight;
 				 diag.Height = diaHeight;
-				 diag.URL = 'http://localhost:19999/conference/conference_dial.html';
+				 diag.URL = 'http://192.168.3.148:19999/conference/conference_dial.html';
 				 diag.CancelEvent = function(){ //关闭事件
 					if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 						top.jzts(); 
