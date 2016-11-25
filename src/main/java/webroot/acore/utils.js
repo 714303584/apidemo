@@ -1,7 +1,7 @@
 
-//var conferenceControllerPath = "http://192.188.188.151:8080";
+var conferenceControllerPath = "http://192.188.188.151:8080";
 
-var conferenceControllerPath = "http://192.168.3.149:8080";
+//var conferenceControllerPath = "http://192.168.3.149:8080";
 //var conferenceControllerPath = "http://192.168.3.234:8080";
 
 //var conferenceControllerPath = "http://192.168.3.148:8080";
