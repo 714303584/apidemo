@@ -81,15 +81,21 @@ public class Runner {
 				});
 				ws.handler(data -> {
 						JsonObject message = new JsonObject();
-						message.put("name", actor.getName());
+						message.put("name", "广播");
 						message.put("message", data.toString());
 						message.put("time", new Date().toString());
-					String roomName = chatRoom.getName();
-					Iterator<Actor> sws =   rooms.get(roomName).getActors().values().iterator();
-					while (sws.hasNext()) {
-						Actor sender = sws.next();
-						sender.getSws().writeFinalTextFrame(message.toString());
+					Iterator<ChatRoom> it = rooms.values().iterator();
+					
+					while (it.hasNext()) {
+						ChatRoom cr =  it.next();
+						Iterator<Actor> ait =  cr.getActors().values().iterator();
+						
+						while (ait.hasNext()) {
+							Actor a =  ait.next();
+							 a.getSws().writeFinalTextFrame(message.toString());
+						}
 					}
+					
 					System.out.println("message:"+message.toString());
 				});
 				
